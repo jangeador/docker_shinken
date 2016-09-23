@@ -4,6 +4,8 @@ services:
   shinken:
     build:
       context: .
+    environment:
+    - "TZ=America/Phoenix"
     ports:
       - "80:80"
     volumes:

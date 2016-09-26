@@ -29,7 +29,10 @@ RUN         chown -R shinken:shinken /etc/shinken/ && \
                 su - shinken -c 'shinken install pickle-retention-file-scheduler' && \
                 su - shinken -c 'shinken install booster-nrpe' && \
                 su - shinken -c 'shinken install logstore-sqlite' && \
-                su - shinken -c 'shinken install livestatus'
+                su - shinken -c 'shinken install livestatus' && \
+                su - shinken -c 'shinken install hyperv' && \
+                su - shinken -c 'shinken install windows' && \
+                su - shinken -c 'shinken install exchange'
 
 # Install and configure thruk
 RUN         gpg --keyserver keys.gnupg.net --recv-keys F8C1CA08A57B9ED7 && \

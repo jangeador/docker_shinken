@@ -84,6 +84,9 @@ RUN         cd /usr/lib/nagios/plugins/ && \
                 chmod a+x * && \
                 chmod u+s check_apt restart_service check_ping check_icmp check_fping apt_update
 
+# Copy active-directory.cfg to resources for permissions
+COPY        resource.d/active-directory.cfg /etc/shinken/resource.d/active-directory.cfg
+
 # Define mountable directories
 VOLUME      ["/etc/shinken/custom_configs", "/usr/local/custom_plugins"]
 

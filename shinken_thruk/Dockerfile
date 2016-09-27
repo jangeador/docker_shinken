@@ -6,7 +6,8 @@ MAINTAINER  Rohit Gupta
 RUN         apt-get update && apt-get install -y python-pip \
                 python-pycurl \
                 python-cherrypy3 \
-                nagios-plugins \
+                nagios-plugins* \
+                cpanminus \
                 libsys-statistics-linux-perl \
                 apache2 \
                 libapache2-mod-proxy-html \
@@ -20,14 +21,14 @@ RUN         apt-get update && apt-get install -y python-pip \
                 libnumber-format-perl \
                 libscalar-list-utils-perl
 RUN         useradd --create-home shinken && \
-                pip install shinken && \
+                pip install shinken pymongo>=3.0.3 requests arrow bottle==0.12.8 && \
                 update-rc.d -f apache2 remove && \
                 update-rc.d -f shinken remove
 
 # Install shinken modules from shinken.io
 RUN         chown -R shinken:shinken /etc/shinken/ && \
                 su - shinken -c 'shinken --init' && \
-                su - shinken -c 'shinken install webui' && \
+                su - shinken -c 'shinken install webui2' && \
                 su - shinken -c 'shinken install auth-htpasswd' && \
                 su - shinken -c 'shinken install sqlitedb' && \
                 su - shinken -c 'shinken install pickle-retention-file-scheduler' && \
@@ -66,7 +67,7 @@ ADD         shinken/shinken.cfg /etc/shinken/shinken.cfg
 ADD         shinken/broker-master.cfg /etc/shinken/brokers/broker-master.cfg
 ADD         shinken/poller-master.cfg /etc/shinken/pollers/poller-master.cfg
 ADD         shinken/scheduler-master.cfg /etc/shinken/schedulers/scheduler-master.cfg
-ADD         shinken/webui.cfg /etc/shinken/modules/webui.cfg
+COPY        shinken/webui2.cfg /etc/shinken/modules/webui2.cfg
 ADD         shinken/livestatus.cfg /etc/shinken/modules/livestatus.cfg
 RUN         mkdir -p /etc/shinken/custom_configs /usr/local/custom_plugins && \
                 ln -sf /etc/shinken/custom_configs/htpasswd.users /etc/shinken/htpasswd.users && \

@@ -14,7 +14,11 @@ RUN         apt-get update && apt-get install -y python-pip \
                 libssl-dev \
                 python-crypto \
                 inotify-tools \
-                ntp
+                ntp \
+                libconfig-inifiles-perl \
+                libdatetime-perl \
+                libnumber-format-perl \
+                libscalar-list-utils-perl
 RUN         useradd --create-home shinken && \
                 pip install shinken && \
                 update-rc.d -f apache2 remove && \
